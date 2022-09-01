@@ -5,7 +5,7 @@ const progressBar = document.getElementById("progress-bar")
 const playButton = document.getElementById('play-button');
 const pauseButton = document.getElementById("pause-button");.3
 const queen = '<i class="fas fa-chess-queen" style="color:#000"></i>';
-
+const stopButton = document.getElementById("stop-button");
 let n, speed, tempSpeed, q, Board = 0;
 // Board = 0;
 
@@ -161,10 +161,8 @@ class Queen {
 playButton.onclick = async function visualise() {
     const chessBoard = document.getElementById("n-queen-board");
     const arrangement = document.getElementById("queen-arrangement");
-
     n = numberbox.value;
     q = new Queen();
-
     if (n > 8) {
         numberbox.value = "";
         alert("Queen value is too large");
@@ -174,6 +172,7 @@ playButton.onclick = async function visualise() {
         alert("Queen value is too small");
         return;
     }
+   
 
     // Removing all the of previous execution context
     while (chessBoard.hasChildNodes()) {
@@ -182,7 +181,6 @@ playButton.onclick = async function visualise() {
     if (arrangement.hasChildNodes()) {
         arrangement.removeChild(arrangement.lastChild)
     }
-
     const para = document.createElement("p");
     para.setAttribute("class", "queen-info");
     para.innerHTML = `For ${n}x${n} board, ${array[n] - 1} arrangements are possible.`;
@@ -222,4 +220,5 @@ playButton.onclick = async function visualise() {
         await q.clearColor(k);
     }
     await q.nQueen();
+       
 };
