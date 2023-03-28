@@ -1,9 +1,9 @@
 
 const numberbox = document.getElementById("numberbox");
 const slider = document.getElementById("slider");
-const progressBar = document.getElementById("progress-bar")
+const progressBar = document.getElementById("progress-bar");
 const playButton = document.getElementById('play-button');
-const pauseButton = document.getElementById("pause-button");.3
+const pauseButton = document.getElementById('pause-button');
 const queen = '<i class="fas fa-chess-queen" style="color:#000"></i>';
 const stopButton = document.getElementById("stop-button");
 let n, speed, tempSpeed, q, Board = 0;
@@ -18,8 +18,10 @@ let pos = {};
 
 
 // Setting the slider value onSlide
+
 speed = (100 - slider.value) * 10;
 tempSpeed = speed;
+
 slider.oninput = function () {
     progressBar.style.width = this.value + "%";
     speed = slider.value;
@@ -114,7 +116,7 @@ class Queen {
     delay = async () => {
         await new Promise((done) => setTimeout(() => done(), speed));
     }
-
+    
     solveQueen = async (board, r, n) => {
         if (r == n) {
             ++Board;
@@ -157,8 +159,11 @@ class Queen {
         }
     }
 }
+let isPlaying = true;
+playButton.addEventListener('click',visualise);
+stopButton.addEventListener('click',stopvisualise);
 
-playButton.onclick = async function visualise() {
+async function visualise() {
     const chessBoard = document.getElementById("n-queen-board");
     const arrangement = document.getElementById("queen-arrangement");
     n = numberbox.value;
@@ -173,7 +178,6 @@ playButton.onclick = async function visualise() {
         return;
     }
    
-
     // Removing all the of previous execution context
     while (chessBoard.hasChildNodes()) {
         chessBoard.removeChild(chessBoard.firstChild);
@@ -187,7 +191,7 @@ playButton.onclick = async function visualise() {
     arrangement.appendChild(para);
 
     //Adding boards to the Div
-    if (chessBoard.childElementCount === 0) {
+    if (chessBoard.childElementCount === 0 && isPlaying===true) {
         for (let i = 0; i < array[n]; ++i) {
             q.uuid.push(Math.random());
             let div = document.createElement('div');
@@ -200,6 +204,8 @@ playButton.onclick = async function visualise() {
             chessBoard.appendChild(div);
             div.appendChild(header);
             div.appendChild(table);
+            if(isPlaying===false)return;
+            
         }
     }
 
@@ -219,6 +225,14 @@ playButton.onclick = async function visualise() {
         }
         await q.clearColor(k);
     }
-    await q.nQueen();
-       
-};
+    await q.nQueen();   
+}
+async function stopvisualise() {
+    alert("Paused");
+}
+ 
+
+
+
+
+
